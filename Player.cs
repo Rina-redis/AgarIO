@@ -32,5 +32,9 @@ namespace AgarIO
                 CenterPosition(direction); //херня, но пока сойдёт
             }
         }
+        public void IncreaseRadius()
+        {
+            shape.Radius++;
+        }
     }
 }

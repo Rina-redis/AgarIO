@@ -32,5 +32,29 @@ namespace AgarIO
                 objectsToDraw.Add(pieceOfFood);
             }
         }
+
+        public void CheckIntersectionWithFood(List<Food> foodPieces, List<Circle> objectsToDraw)
+        {
+            //foreach (Food food in foodPieces)
+            //{
+            //    bool intersect = MathHelper.CheckIntersectionCircleVsCircle(food, player);
+            //    if (intersect)
+            //    {
+            //        foodPieces.RemoveAll(food);
+            //        player.IncreaseRadius();
+            //    }
+            //}
+
+            for(int i = foodPieces.Count-1; i>=0; i--)
+            {
+                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], player);
+                if (intersect)
+                {
+                    foodPieces.Remove(foodPieces[i]);
+                    objectsToDraw.Remove(foodPieces[i]);
+                    player.IncreaseRadius();
+                }
+            }
+        }
     }
 }
