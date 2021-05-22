@@ -1,16 +1,16 @@
 ﻿ using System;
 using System.Collections.Generic;
 using System.Text;
-using SFML;
+using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
 
 
 namespace AgarIO
 {
-    class Player
+    class Player: Circle
     {
-        public CircleShape shape;
+        public Vector2f direction;
         public Dictionary<Keyboard.Key, Direction> keysMovement = new Dictionary<Keyboard.Key, Direction>()
             {
              {Keyboard.Key.W, Direction.up },
@@ -22,9 +22,15 @@ namespace AgarIO
         public Player()
         {
             shape = new CircleShape();
-            shape.Radius = 15;
-
+            shape.FillColor = Color.Red;
+            shape.Radius = 30;
         }    
-
+        public void Move()
+        {
+            if(direction!= null)
+            {           
+                CenterPosition(direction); //херня, но пока сойдёт
+            }
+        }
     }
 }
