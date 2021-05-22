@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.Window;
 using System.Text;
+using SFML.System;
 
 namespace AgarIO
 {
     class Game
     {
+        private Clock clock = new Clock();
         Player hero = new Player();
         Controller controller;
         public List<Circle> allCircleToDraw = new List<Circle>();
@@ -17,7 +19,11 @@ namespace AgarIO
             controller = new Controller(hero);
             RenderWindow window = new RenderWindow(new VideoMode(1600, 900), "Game window");
 
-            controller.SpavnFood(allCircleToDraw, allFood, 200);
+            double time = clock.ElapsedTime.AsMicroseconds();
+            clock.Restart();
+            time /= 800;
+
+            controller.SpavnFood(allFood, 200);
             allCircleToDraw.Add(hero);         
             #region setupWindow
             window.MouseMoved += OnMouseMoved;
@@ -26,9 +32,9 @@ namespace AgarIO
             #endregion 
             while (window.IsOpen)
             {
-                window.Clear();
-                controller.CheckIntersectionWithFood(allFood, allCircleToDraw);
-                hero.Move();
+                window.Clear(Color.White);
+                controller.CheckIntersectionWithFood(allFood);
+                hero.Move(time);
                 DrawAllObjects(window);   
                 
                 window.DispatchEvents();
@@ -49,6 +55,11 @@ namespace AgarIO
         public void DrawAllObjects(object sender)
         {
             RenderWindow w = (RenderWindow)sender;
+            
+            foreach (Circle circle in allFood)
+            {
+                w.Draw(circle.shape);
+            }
             foreach (Circle circle in allCircleToDraw)
             {
                 w.Draw(circle.shape);

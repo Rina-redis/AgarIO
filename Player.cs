@@ -28,7 +28,8 @@ namespace AgarIO
         public void Move()
         {
             if(direction!= null)
-            {           
+            {
+                shape.Position = new Vector2f(position.X - shape.Radius, position.Y - shape.Radius);
                 CenterPosition(direction); //херня, но пока сойдёт
             }
         }

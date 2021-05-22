@@ -15,7 +15,7 @@ namespace AgarIO
         }
         public Vector2f GetCenter()
         {
-            return new Vector2f(shape.Position.X / 2, shape.Position.Y / 2);
+            return new Vector2f(shape.Position.X + shape.Radius, shape.Position.Y + shape.Radius);
         }
         public void CenterPosition(Vector2f position)
         {

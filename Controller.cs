@@ -18,7 +18,7 @@ namespace AgarIO
         {
             player.direction = new Vector2f(e.X, e.Y);
         }
-        public void SpavnFood(List<Circle> objectsToDraw, List<Food> foodPieces, int numberOfFood)
+        public void SpavnFood( List<Food> foodPieces, int numberOfFood)
         {
             for(int i = 0; i< numberOfFood; i++)
             {
@@ -29,11 +29,11 @@ namespace AgarIO
 
                 Food pieceOfFood = new Food(PosX, PosY);
                 foodPieces.Add(pieceOfFood);
-                objectsToDraw.Add(pieceOfFood);
+               // objectsToDraw.Add(pieceOfFood);
             }
         }
 
-        public void CheckIntersectionWithFood(List<Food> foodPieces, List<Circle> objectsToDraw)
+        public void CheckIntersectionWithFood(List<Food> foodPieces)
         {
             //foreach (Food food in foodPieces)
             //{
@@ -45,13 +45,23 @@ namespace AgarIO
             //    }
             //}
 
-            for(int i = foodPieces.Count-1; i>=0; i--)
+            //for(int i = foodPieces.Count-1; i>=0; i--)
+            //{
+            //    bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], player);
+            //    if (intersect)
+            //    {
+            //        foodPieces.Remove(foodPieces[i]);
+            //        objectsToDraw.Remove(foodPieces[i]);
+            //        player.IncreaseRadius();
+            //    }
+            //}
+
+            for (int i = 0; i < foodPieces.Count - 1; i++)
             {
                 bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], player);
                 if (intersect)
                 {
-                    foodPieces.Remove(foodPieces[i]);
-                    objectsToDraw.Remove(foodPieces[i]);
+                    foodPieces.Remove(foodPieces[i]);                   
                     player.IncreaseRadius();
                 }
             }
