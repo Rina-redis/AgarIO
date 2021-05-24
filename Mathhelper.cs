@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
 using SFML.Window;
+using SFML.System;
 
 namespace AgarIO
 {
@@ -16,5 +17,14 @@ namespace AgarIO
                 return true;
             return false;
         }
+
+        public static float DistanceToPoint(Vector2f source, Vector2f destination)
+        {
+            float distanceToPoint = (float)Math.Sqrt(((destination.X -source.X) *(destination.X - source.X)) +
+                                       ((destination.Y - source.Y) * (destination.Y - source.Y)));
+
+            return distanceToPoint;
+        }
+           
     }
 }

@@ -9,32 +9,32 @@ namespace AgarIO
 {
     class Game
     {
-        private Clock clock = new Clock();
+        
+        public Time tickRate;
+        private Clock timer = new Clock();
+        
         Player hero = new Player();
         Controller controller;
+
         public List<Circle> allCircleToDraw = new List<Circle>();
+        public List<Bot> aliveBots = new List<Bot>();
         public List<Food> allFood = new List<Food>();
         public void Start()
         {
+            RenderWindow window = setupRenderWindow();
+            allCircleToDraw.Add(hero);
+            CreateBots(7);
             controller = new Controller(hero);
-            RenderWindow window = new RenderWindow(new VideoMode(1600, 900), "Game window");
-
-            double time = clock.ElapsedTime.AsMicroseconds();
-            clock.Restart();
-            time /= 800;
-
-            controller.SpavnFood(allFood, 200);
-            allCircleToDraw.Add(hero);         
-            #region setupWindow
-            window.MouseMoved += OnMouseMoved;
-            window.Closed += WindowClosed;
-            window.SetMouseCursorVisible(false);
-            #endregion 
+            
             while (window.IsOpen)
             {
+                tickRate = timer.Restart();
                 window.Clear(Color.White);
-                controller.CheckIntersectionWithFood(allFood);
-                hero.Move(time);
+
+                controller.TryEatFood(allFood);
+                SpawnFood(allFood, 100);
+
+                hero.Move();
                 DrawAllObjects(window);   
                 
                 window.DispatchEvents();
@@ -63,6 +63,38 @@ namespace AgarIO
             foreach (Circle circle in allCircleToDraw)
             {
                 w.Draw(circle.shape);
+            }
+            foreach (Circle circle in aliveBots)
+            {
+                w.Draw(circle.shape);
+            }
+        }
+
+        public void SpawnFood(List<Food> foodPieces, int numberOfFood)
+        {
+            for (int i = foodPieces.Count; i < numberOfFood; i++)
+            {
+                Random rand = new Random();
+                int PosX = rand.Next(1, 1600);
+                int PosY = rand.Next(1, 900);
+
+                Food pieceOfFood = new Food(PosX, PosY);
+                foodPieces.Add(pieceOfFood);
+            }
+        }
+        public RenderWindow setupRenderWindow()
+        {
+            RenderWindow window = new RenderWindow(new VideoMode(1600, 900), "Game window");
+            window.MouseMoved += OnMouseMoved;
+            window.Closed += WindowClosed;
+            return window;
+        }
+         public void  CreateBots(int numberOfBots)
+        {
+            for(int i=1; i<=numberOfBots; i++)
+            {
+                Bot newBot = new Bot();              
+                aliveBots.Add(newBot);
             }
         }
     }

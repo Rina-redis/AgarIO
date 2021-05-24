@@ -15,5 +15,9 @@ namespace AgarIO
             shape.Radius = 7;       
             shape.FillColor = new Color((byte)rand.Next(1, 255), (byte)rand.Next(1, 255), (byte)rand.Next(1, 255)) ;
         }
+        public void Die()
+        {
+            shape.Dispose();
+        }
     }
 }

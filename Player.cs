@@ -10,29 +10,15 @@ namespace AgarIO
 {
     class Player: Circle
     {
-        public Vector2f direction;
-        public Dictionary<Keyboard.Key, Direction> keysMovement = new Dictionary<Keyboard.Key, Direction>()
-            {
-             {Keyboard.Key.W, Direction.up },
-             {Keyboard.Key.S, Direction.down },
-             {Keyboard.Key.A, Direction.left },
-             {Keyboard.Key.D, Direction.right }
-            };
-
+        float speed = 0.5f;
+       
         public Player()
         {
             shape = new CircleShape();
             shape.FillColor = Color.Red;
             shape.Radius = 30;
         }    
-        public void Move()
-        {
-            if(direction!= null)
-            {
-                shape.Position = new Vector2f(position.X - shape.Radius, position.Y - shape.Radius);
-                CenterPosition(direction); //херня, но пока сойдёт
-            }
-        }
+        
         public void IncreaseRadius()
         {
             shape.Radius++;
