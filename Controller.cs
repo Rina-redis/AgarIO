@@ -8,10 +8,10 @@ namespace AgarIO
 {
     class Controller
     {
-        Player owner;
+        Circle owner;
         
 
-        public Controller(Player Player)
+        public Controller(Circle Player)
         {
             owner = Player;
         }
@@ -29,7 +29,7 @@ namespace AgarIO
                 if (intersect)
                 {
                     foodPieces.Remove(foodPieces[i]);
-                    owner.IncreaseRadius();                   
+                    owner.shape.Radius++;                  
                 }
             }
 

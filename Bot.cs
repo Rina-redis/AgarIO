@@ -10,6 +10,8 @@ namespace AgarIO
 {
     class Bot:Circle
     {
+        float speed = 0.5f;
+        Controller controller;
         public Bot()
         {
             Random rand = new Random();
@@ -17,11 +19,14 @@ namespace AgarIO
             shape.Position = new Vector2f(rand.Next(1, 1500), rand.Next(1, 900));
             shape.FillColor = new Color((byte)rand.Next(1, 255), (byte)rand.Next(1, 255), (byte)rand.Next(1, 255));
             shape.Radius = 25;
+            controller = new Controller(this);
         }
-        public void TryEatFood(List<Food> foodPieces)
+        public void Cycle(List<Food> foodPieces)
         {
+            Food nearestFood = NearestFood(foodPieces);
+            MoveToNearestFood(nearestFood, foodPieces);
+        }    
 
-        }
         public Food NearestFood(List<Food> foodPieces)
         {
             Food nearestFood = new Food(0,0);
@@ -37,9 +42,17 @@ namespace AgarIO
             }
             return nearestFood;
         }
-        public void MoveToNearestFood(Food nearestFood)
-        {
-
+        public void MoveToNearestFood(Food nearestFood, List<Food> foodPieces)
+        {          
+               float distance = MathHelper.DistanceToPoint(direction, GetCenter());
+               if (distance > 2)
+                {
+                    Vector2f directionTemp = new Vector2f(speed  * (nearestFood.shape.Position.X - GetCenter().X) / distance,
+                                      speed  * (nearestFood.shape.Position.Y - GetCenter().Y) / distance);
+                    shape.Position += directionTemp;
+                    controller.TryEatFood(foodPieces);
+                }
+            
         }
     }
 }

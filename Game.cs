@@ -35,7 +35,8 @@ namespace AgarIO
                 SpawnFood(allFood, 100);
 
                 hero.Move();
-                DrawAllObjects(window);   
+                DrawAllObjects(window);
+                BotsCycle();
                 
                 window.DispatchEvents();
                 window.Display();
@@ -95,6 +96,14 @@ namespace AgarIO
             {
                 Bot newBot = new Bot();              
                 aliveBots.Add(newBot);
+            }
+        }
+
+        public void BotsCycle()
+        {
+            foreach(Bot bot in aliveBots)
+            {
+                bot.Cycle(allFood);
             }
         }
     }
