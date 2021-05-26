@@ -18,7 +18,12 @@ namespace AgarIO
                 {
                     Vector2f directionTemp = new Vector2f(speed * (direction.X - GetCenter().X) / distance,
                                                           speed * (direction.Y - GetCenter().Y) / distance);
-                    shape.Position += directionTemp;
+                    Vector2f newPos = shape.Position + directionTemp;
+                    if(newPos.X < 0 || newPos.Y < 0)
+                    {
+                        
+                    }
+                      shape.Position = newPos;
                 }
             }
         }

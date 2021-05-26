@@ -8,8 +8,7 @@ using SFML.System;
 namespace AgarIO
 {
     class Game
-    {
-        
+    {     
         //public Time tickRate;
         // private Clock timer = new Clock();
         
