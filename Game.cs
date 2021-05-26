@@ -34,7 +34,7 @@ namespace AgarIO
                 controller.TryEatFood(allFood);
                 SpawnFood(allFood, 100);
 
-                hero.Move();
+                
                 DrawAllObjects(window);
                 BotsCycle();
                 
@@ -75,11 +75,8 @@ namespace AgarIO
         {
             for (int i = foodPieces.Count; i < numberOfFood; i++)
             {
-                Random rand = new Random();
-                int PosX = rand.Next(1, 1600);
-                int PosY = rand.Next(1, 900);
-
-                Food pieceOfFood = new Food(PosX, PosY);
+                Random rand = new Random();             
+                Food pieceOfFood = new Food();
                 foodPieces.Add(pieceOfFood);
             }
         }

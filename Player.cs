@@ -9,9 +9,7 @@ using SFML.Graphics;
 namespace AgarIO
 {
     class Player: Circle
-    {
-        float speed = 0.5f;
-       
+    {  
         public Player()
         {
             shape = new CircleShape();

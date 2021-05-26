@@ -8,7 +8,7 @@ using SFML.System;
 
 namespace AgarIO
 {
-    class Bot:Circle
+    class Bot:Food
     {
         float speed = 0.5f;
         Controller controller;
@@ -29,7 +29,7 @@ namespace AgarIO
 
         public Food NearestFood(List<Food> foodPieces)
         {
-            Food nearestFood = new Food(0,0);
+            Food nearestFood = new Food();
             float nearestFoodDistance = 2000;
             foreach (Food food in foodPieces)
             {

@@ -7,7 +7,7 @@ namespace AgarIO
 {
     class Circle
     {
-     
+        float speed = 2f; //must change with changing radius
         public CircleShape shape;
         public Vector2f direction;
         public Circle()
@@ -22,15 +22,17 @@ namespace AgarIO
         {
             shape.Position = new Vector2f((position.X - shape.Radius), (position.Y - shape.Radius));
         }
-        public void Move()
+        public void Move(Vector2f direction)
         {
-            if (direction != null)
+            if (direction != new Vector2f(0, 0))
             {
-            
-                //Vector2f PosToMove = new Vector2f( time * direction.X,  time * direction.Y);
-                //shape.Position = PosToMove; 
-
-                CenterPosition(direction); // пока сойдёт
+                float distance = MathHelper.DistanceToPoint(direction, GetCenter());
+                if (distance > 2)
+                {
+                    Vector2f directionTemp = new Vector2f(speed * (direction.X - GetCenter().X) / distance,
+                                      speed * (direction.Y - GetCenter().Y) / distance);
+                    shape.Position += directionTemp;
+                }
             }
         }
     }

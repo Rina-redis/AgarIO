@@ -18,7 +18,7 @@ namespace AgarIO
 
         public void SetCoordinateForMovement(MouseMoveEventArgs e)
         {
-            owner.direction = new Vector2f(e.X, e.Y);
+           owner.Move(new Vector2f(e.X, e.Y));
         }
 
         public void TryEatFood(List<Food> foodPieces)

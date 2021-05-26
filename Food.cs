@@ -8,9 +8,11 @@ namespace AgarIO
 {
     class Food : Circle
     {
-        public Food(int positionX, int positionY)
+        public Food()
         {
             Random rand = new Random();
+            int positionX = rand.Next(1, 1600);
+            int positionY = rand.Next(1, 900);
             shape.Position = new Vector2f(positionX, positionY);
             shape.Radius = 7;       
             shape.FillColor = new Color((byte)rand.Next(1, 255), (byte)rand.Next(1, 255), (byte)rand.Next(1, 255)) ;
