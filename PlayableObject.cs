@@ -17,7 +17,7 @@ namespace AgarIO
                 if (distance > 2)
                 {
                     Vector2f directionTemp = new Vector2f(speed * (direction.X - GetCenter().X) / distance,
-                                      speed * (direction.Y - GetCenter().Y) / distance);
+                                                          speed * (direction.Y - GetCenter().Y) / distance);
                     shape.Position += directionTemp;
                 }
             }
@@ -26,19 +26,18 @@ namespace AgarIO
         {
             for (int i = 0; i < foodPieces.Count - 1; i++)
             {
-                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], this);
+                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], this); //need to check radius of objeckt
                 if (intersect)
                 {
                     foodPieces.Remove(foodPieces[i]);
-                    IncreaseRadius();
+                    IncreaseRadius(foodPieces[i]);
                 }
             }
-
         }
        
-        public void IncreaseRadius()
+        public void IncreaseRadius(EatableObject objectWhichWasEaten)
         {
-            shape.Radius++;
+            shape.Radius += objectWhichWasEaten.shape.Radius/3;
         }
     }
 }

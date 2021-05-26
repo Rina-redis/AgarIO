@@ -9,18 +9,14 @@ using SFML.System;
 namespace AgarIO
 {
     class Bot: PlayableObject
-    {
-        
-        Controller controller;
+    {        
         public Bot()
         {
-            Random rand = new Random();
-            shape = new CircleShape();
+            Random rand = new Random();   
             shape.Position = new Vector2f(rand.Next(1, 1500), rand.Next(1, 900));
             shape.FillColor = new Color((byte)rand.Next(1, 255), (byte)rand.Next(1, 255), (byte)rand.Next(1, 255));
             shape.Radius = 25;
             speed = 0.1f;
-            controller = new Controller(this);
         }
         public void Cycle(List<EatableObject> foodPieces)
         {
@@ -35,7 +31,7 @@ namespace AgarIO
             if (intersect)
             {
                 foodPieces.Remove(nearestFood);
-                IncreaseRadius();
+                IncreaseRadius(nearestFood);
             }       
         }
 

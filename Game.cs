@@ -10,35 +10,31 @@ namespace AgarIO
     class Game
     {
         
-        public Time tickRate;
-        private Clock timer = new Clock();
+        //public Time tickRate;
+        // private Clock timer = new Clock();
         
         Player hero = new Player();
  
         public List<PlayableObject> allCircleToDraw = new List<PlayableObject>();
-        public List<Bot> aliveBots = new List<Bot>();
+        // public List<Bot> aliveBots = new List<Bot>();
         public List<Food> allFood = new List<Food>();
         public List <EatableObject> allThingsWhichAreEatble = new List<EatableObject>();
         public void Start()
         {
             RenderWindow window = setupRenderWindow();
             allThingsWhichAreEatble.Add(hero);
-            allCircleToDraw.Add(hero);
-            CreateBots(7);
-           // controller = new Controller(hero);
-            
+         
+            CreateBots(15);
+                     
             while (window.IsOpen)
             {
-                tickRate = timer.Restart();
+                SpawnFood(allThingsWhichAreEatble, 100);
+              
                 window.Clear(Color.White);
-
                 hero.TryEat(allThingsWhichAreEatble);
-               SpawnFood(allThingsWhichAreEatble, 100);
-
-
-                DrawAllObjects(window);
                 BotsCycle();
-                
+
+                DrawAllObjects(window);                             
                 window.DispatchEvents();
                 window.Display();
             }
@@ -57,16 +53,17 @@ namespace AgarIO
         public void DrawAllObjects(object sender)
         {
             RenderWindow w = (RenderWindow)sender;
-            
-            foreach(EatableObject objectToDraw in allThingsWhichAreEatble)
+
+            foreach (EatableObject objectToDraw in allThingsWhichAreEatble)
             {
                 w.Draw(objectToDraw.shape);
             }
+            w.Draw(hero.shape);
 
-            foreach (PlayableObject circle in allCircleToDraw)
-            {
-                w.Draw(circle.shape);
-            }
+            //foreach (PlayableObject circle in allCircleToDraw)
+            //{
+            //    w.Draw(circle.shape);
+            //}
             //foreach (PlayableObject circle in aliveBots)
             //{
             //    w.Draw(circle.shape);
