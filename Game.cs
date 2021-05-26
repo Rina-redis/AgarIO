@@ -33,9 +33,9 @@ namespace AgarIO
                 window.Clear(Color.White);
 
                 hero.TryEat(allThingsWhichAreEatble);
-                SpawnFood(all, 100);
+               SpawnFood(allThingsWhichAreEatble, 100);
 
-                
+
                 DrawAllObjects(window);
                 BotsCycle();
                 
@@ -62,27 +62,24 @@ namespace AgarIO
             {
                 w.Draw(objectToDraw.shape);
             }
-            //foreach (Food food in allFood)
-            //{
-            //    w.Draw(food.shape);
-            //}
+
             foreach (PlayableObject circle in allCircleToDraw)
             {
                 w.Draw(circle.shape);
             }
-            foreach (PlayableObject circle in aliveBots)
-            {
-                w.Draw(circle.shape);
-            }
+            //foreach (PlayableObject circle in aliveBots)
+            //{
+            //    w.Draw(circle.shape);
+            //}
         }
 
-        public void SpawnFood(List<Food> foodPieces, int numberOfFood)
+        public void SpawnFood(List<EatableObject> foodPieces, int numberOfFood)
         {
             for (int i = foodPieces.Count; i < numberOfFood; i++)
             {
                 Random rand = new Random();             
                 Food pieceOfFood = new Food();
-                allThingsWhichAreEatble.Add(pieceOfFood);
+               // allThingsWhichAreEatble.Add(pieceOfFood);
                 foodPieces.Add(pieceOfFood);
             }
         }
@@ -99,15 +96,30 @@ namespace AgarIO
             {
                 Bot newBot = new Bot();
                 allThingsWhichAreEatble.Add(newBot);
-                aliveBots.Add(newBot);
+                //aliveBots.Add(newBot);
             }
         }
 
         public void BotsCycle()
         {
-            foreach(Bot bot in aliveBots)
+            //foreach(Bot bot in allThingsWhichAreEatble)
+            //{
+            //    bot.Cycle(allThingsWhichAreEatble);
+            //}
+
+            //foreach (Bot bot in allThingsWhichAreEatble)
+            //{
+            //    bot.Cycle(allThingsWhichAreEatble);
+            //}
+
+            for (int i = 0; i < allThingsWhichAreEatble.Count - 1; i++)
             {
-                bot.Cycle(allThingsWhichAreEatble);
+                if (allThingsWhichAreEatble[i] is Bot)
+                {
+                    Bot newBot = (Bot)allThingsWhichAreEatble[i];
+                    newBot.Cycle(allThingsWhichAreEatble);
+                }
+
             }
         }
     }

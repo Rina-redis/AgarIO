@@ -7,7 +7,7 @@ namespace AgarIO
 {
     class PlayableObject : EatableObject
     {
-        float speed = 0.1f; //must change with changing radius       
+        public float speed = 3f; //must change with changing radius       
           
         public void Move(Vector2f direction)
         {
