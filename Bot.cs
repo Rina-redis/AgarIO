@@ -8,7 +8,7 @@ using SFML.System;
 
 namespace AgarIO
 {
-    class Bot:Food
+    class Bot: PlayableObject
     {
         float speed = 0.5f;
         Controller controller;
@@ -21,17 +21,28 @@ namespace AgarIO
             shape.Radius = 25;
             controller = new Controller(this);
         }
-        public void Cycle(List<Food> foodPieces)
+        public void Cycle(List<EatableObject> foodPieces)
         {
-            Food nearestFood = NearestFood(foodPieces);
-            Move(nearestFood, foodPieces);
-        }    
+            EatableObject nearestFood = NearestFood(foodPieces);
+            Move(nearestFood.shape.Position);//mde
+            TryEatNearestFood(nearestFood, foodPieces);
+        }   
+        
+         public void TryEatNearestFood(EatableObject nearestFood, List<EatableObject> foodPieces)
+        {          
+            bool intersect = MathHelper.CheckIntersectionCircleVsCircle(nearestFood, this);
+            if (intersect)
+            {
+                foodPieces.Remove(nearestFood);
+                IncreaseRadius();
+            }       
+        }
 
-        public Food NearestFood(List<Food> foodPieces)
+        public EatableObject NearestFood(List<EatableObject> foodPieces)
         {
-            Food nearestFood = new Food();
+            EatableObject nearestFood = new EatableObject();
             float nearestFoodDistance = 2000;
-            foreach (Food food in foodPieces)
+            foreach (EatableObject food in foodPieces)
             {
                float tempNearestFoodDistance = MathHelper.DistanceToPoint(shape.Position, food.shape.Position);
                 if (tempNearestFoodDistance <= nearestFoodDistance)
@@ -42,17 +53,6 @@ namespace AgarIO
             }
             return nearestFood;
         }
-        public override void Move(Food nearestFood, List<Food> foodPieces)
-        {          
-               float distance = MathHelper.DistanceToPoint(direction, GetCenter());
-               if (distance > 2)
-                {
-                    Vector2f directionTemp = new Vector2f(speed  * (nearestFood.shape.Position.X - GetCenter().X) / distance,
-                                      speed  * (nearestFood.shape.Position.Y - GetCenter().Y) / distance);
-                    shape.Position += directionTemp;
-                    controller.TryEatFood(foodPieces);
-                }
-            
-        }
+      
     }
 }

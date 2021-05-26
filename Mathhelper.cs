@@ -9,7 +9,7 @@ namespace AgarIO
 {
     class MathHelper
     {
-        public static bool CheckIntersectionCircleVsCircle(Circle circle1, Circle circle2)
+        public static bool CheckIntersectionCircleVsCircle(EatableObject circle1, EatableObject circle2)
         {
             float distance = (float)Math.Sqrt((circle2.GetCenter().X - circle1.GetCenter().X) * (circle2.GetCenter().X - circle1.GetCenter().X) +
                                               (circle2.GetCenter().Y - circle1.GetCenter().Y) * (circle2.GetCenter().Y - circle1.GetCenter().Y));

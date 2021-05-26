@@ -6,10 +6,11 @@ using SFML.Graphics;
 
 namespace AgarIO
 {
-    class Food : Circle
-    {
+    class Food : EatableObject
+    {     
         public Food()
         {
+            shape = new CircleShape();
             Random rand = new Random();
             int positionX = rand.Next(1, 1600);
             int positionY = rand.Next(1, 900);

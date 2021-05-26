@@ -8,18 +8,17 @@ using SFML.Graphics;
 
 namespace AgarIO
 {
-    class Player: Circle
+    class Player: PlayableObject
     {  
         public Player()
         {
             shape = new CircleShape();
             shape.FillColor = Color.Red;
             shape.Radius = 30;
-        }    
-        
-        public void IncreaseRadius()
+        }
+        public void SetCoordinateForMovement(MouseMoveEventArgs e)
         {
-            shape.Radius++;
+            Move(new Vector2f(e.X, e.Y));
         }
     }
 }
