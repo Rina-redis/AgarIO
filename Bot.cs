@@ -24,7 +24,7 @@ namespace AgarIO
         public void Cycle(List<Food> foodPieces)
         {
             Food nearestFood = NearestFood(foodPieces);
-            MoveToNearestFood(nearestFood, foodPieces);
+            Move(nearestFood, foodPieces);
         }    
 
         public Food NearestFood(List<Food> foodPieces)
@@ -42,7 +42,7 @@ namespace AgarIO
             }
             return nearestFood;
         }
-        public void MoveToNearestFood(Food nearestFood, List<Food> foodPieces)
+        public override void Move(Food nearestFood, List<Food> foodPieces)
         {          
                float distance = MathHelper.DistanceToPoint(direction, GetCenter());
                if (distance > 2)

@@ -22,7 +22,7 @@ namespace AgarIO
         {
             shape.Position = new Vector2f((position.X - shape.Radius), (position.Y - shape.Radius));
         }
-        public void Move(Vector2f direction)
+        public virtual void Move(Vector2f direction)
         {
             if (direction != new Vector2f(0, 0))
             {
