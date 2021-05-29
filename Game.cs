@@ -9,18 +9,16 @@ namespace AgarIO
 {
     class Game
     {
-        //public Time tickRate;
-        // private Clock timer = new Clock();
         Text text;
-        Player hero = new Player();
- 
-        public List<PlayableObject> allCircleToDraw = new List<PlayableObject>();
-        // public List<Bot> aliveBots = new List<Bot>();
+        Player hero;
+        Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");
+        public List<PlayableObject> allCircleToDraw = new List<PlayableObject>();     
         public List<Food> allFood = new List<Food>();
         public List <EatableObject> allThingsWhichAreEatble = new List<EatableObject>();
+
         public void Start()
         {
-            text = SetupText();
+            hero = new Player();
             RenderWindow window = setupRenderWindow();
             allThingsWhichAreEatble.Add(hero);
          
@@ -28,6 +26,7 @@ namespace AgarIO
                      
             while (window.IsOpen)
             {
+                text = hero.ChangeText(font);
                 SpawnFood(allThingsWhichAreEatble, 100);
               
                 window.Clear(Color.White);
@@ -49,16 +48,16 @@ namespace AgarIO
             RenderWindow w = (RenderWindow)sender;
             w.Close();
         }
-        public Text SetupText()
-        {
-            Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\font.ttf");
-            Text text = new Text("jkvjdskcvj",font);
-            text.CharacterSize = 24;
-            text.FillColor = Color.Red;
-            text.Position = new Vector2f(100, 100);            
-            return text;
+        //public Text SetupText()
+        //{
+        //    //Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\font.ttf");
+        //    Text text = new Text("v f xv",font);
+        //    text.CharacterSize = 24;
+        //    text.FillColor = Color.Red;
+        //    text.Position = new Vector2f(100, 100);            
+        //    return text;
 
-        }
+        //}
         public void DrawAllObjects(object sender)
         {
             RenderWindow w = (RenderWindow)sender;
