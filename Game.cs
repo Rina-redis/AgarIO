@@ -8,10 +8,10 @@ using SFML.System;
 namespace AgarIO
 {
     class Game
-    {     
+    {
         //public Time tickRate;
         // private Clock timer = new Clock();
-        
+        Text text;
         Player hero = new Player();
  
         public List<PlayableObject> allCircleToDraw = new List<PlayableObject>();
@@ -20,10 +20,11 @@ namespace AgarIO
         public List <EatableObject> allThingsWhichAreEatble = new List<EatableObject>();
         public void Start()
         {
+            text = SetupText();
             RenderWindow window = setupRenderWindow();
             allThingsWhichAreEatble.Add(hero);
          
-            CreateBots(15);
+            CreateBots(5);
                      
             while (window.IsOpen)
             {
@@ -48,25 +49,25 @@ namespace AgarIO
             RenderWindow w = (RenderWindow)sender;
             w.Close();
         }
+        public Text SetupText()
+        {
+            Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\font.ttf");
+            Text text = new Text("jkvjdskcvj",font);
+            text.CharacterSize = 24;
+            text.FillColor = Color.Red;
+            text.Position = new Vector2f(100, 100);            
+            return text;
 
+        }
         public void DrawAllObjects(object sender)
         {
             RenderWindow w = (RenderWindow)sender;
-
+            w.Draw(text);
             foreach (EatableObject objectToDraw in allThingsWhichAreEatble)
             {
                 w.Draw(objectToDraw.shape);
             }
             w.Draw(hero.shape);
-
-            //foreach (PlayableObject circle in allCircleToDraw)
-            //{
-            //    w.Draw(circle.shape);
-            //}
-            //foreach (PlayableObject circle in aliveBots)
-            //{
-            //    w.Draw(circle.shape);
-            //}
         }
 
         public void SpawnFood(List<EatableObject> foodPieces, int numberOfFood)
@@ -75,13 +76,13 @@ namespace AgarIO
             {
                 Random rand = new Random();             
                 Food pieceOfFood = new Food();
-               // allThingsWhichAreEatble.Add(pieceOfFood);
                 foodPieces.Add(pieceOfFood);
             }
         }
         public RenderWindow setupRenderWindow()
         {
-            RenderWindow window = new RenderWindow(new VideoMode(1600, 900), "Game window");
+            RenderWindow window = new RenderWindow(new VideoMode(Constants.windowWidth, Constants.windowHeight), "Game window");
+            window.SetFramerateLimit(1000);
             window.MouseMoved += OnMouseMoved;
             window.Closed += WindowClosed;
             return window;
@@ -92,22 +93,12 @@ namespace AgarIO
             {
                 Bot newBot = new Bot();
                 allThingsWhichAreEatble.Add(newBot);
-                //aliveBots.Add(newBot);
             }
         }
 
         public void BotsCycle()
         {
-            //foreach(Bot bot in allThingsWhichAreEatble)
-            //{
-            //    bot.Cycle(allThingsWhichAreEatble);
-            //}
-
-            //foreach (Bot bot in allThingsWhichAreEatble)
-            //{
-            //    bot.Cycle(allThingsWhichAreEatble);
-            //}
-
+  
             for (int i = 0; i < allThingsWhichAreEatble.Count - 1; i++)
             {
                 if (allThingsWhichAreEatble[i] is Bot)

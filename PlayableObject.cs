@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
+using System;
 
 namespace AgarIO
 {
@@ -18,14 +19,24 @@ namespace AgarIO
                 {
                     Vector2f directionTemp = new Vector2f(speed * (direction.X - GetCenter().X) / distance,
                                                           speed * (direction.Y - GetCenter().Y) / distance);
-                    Vector2f newPos = shape.Position + directionTemp;
-                    if(newPos.X < 0 || newPos.Y < 0)
+                    Vector2f newPos = shape.Position;
+                    if (newPos.X < 0 || newPos.Y < 0)
                     {
-                        
+                        newPos += RandomVector();
                     }
-                      shape.Position = newPos;
+                    else
+                     {
+                        newPos += directionTemp;
+                     }
+                    shape.Position = newPos;
                 }
             }
+        }
+        public Vector2f RandomVector()
+        {
+            Random random = new Random();
+            Vector2f randomDirection = new Vector2f(random.Next(1,Constants.windowWidth),random.Next(1,Constants.windowHeight));
+            return randomDirection;
         }
         public void TryEat(List<EatableObject> foodPieces)
         {

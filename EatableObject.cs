@@ -14,7 +14,6 @@ namespace AgarIO
         public EatableObject()
         {
             shape = new CircleShape();
-
         }
         public Vector2f GetCenter()
         {

@@ -15,6 +15,7 @@ namespace AgarIO
             shape = new CircleShape();
             shape.FillColor = Color.Red;
             shape.Radius = 30;
+            shape.Position = new Vector2f(200, 200);
         }
         public void SetCoordinateForMovement(MouseMoveEventArgs e)
         {
