@@ -24,13 +24,22 @@ namespace AgarIO
             Move(new Vector2f(e.X, e.Y));
         }
         public Text ChangeText(Font font)
-        {
-           // Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\font.ttf");
+        {         
             textWithRadius = new Text("Current radius:  "+((int)shape.Radius).ToString(), font);
             textWithRadius.CharacterSize = 24;
             textWithRadius.FillColor = Color.Red;
             textWithRadius.Position = new Vector2f(100, 100);
             return textWithRadius;
+        }
+
+        public void ChangeCurrentBodyToBot(List<Bot> bots, int randomBotNumber)
+        {
+            CircleShape tempShape = shape;
+
+            PlayableObject newPlayer = bots[randomBotNumber];
+            shape = newPlayer.shape;
+
+            bots[randomBotNumber].shape = tempShape;
         }
     }
 }

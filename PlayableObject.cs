@@ -35,7 +35,7 @@ namespace AgarIO
         public Vector2f RandomVector()
         {
             Random random = new Random();
-            Vector2f randomDirection = new Vector2f((float)random.NextDouble(), (float)random.NextDouble());
+            Vector2f randomDirection = new Vector2f((float)random.NextFloat(-1,1), (float)random.NextFloat(-1, 1));
             return randomDirection;
         }
         public void TryEat(List<EatableObject> foodPieces)
@@ -47,7 +47,6 @@ namespace AgarIO
                 {
                     foodPieces.Remove(foodPieces[i]);
                     IncreaseRadius(foodPieces[i]);
-                   //ChangeText();
                 }
             }
         }

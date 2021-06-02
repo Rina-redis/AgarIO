@@ -7,7 +7,7 @@ using SFML.Graphics;
 
 namespace AgarIO
 {
-    class EatableObject
+    public class EatableObject
     {
         public CircleShape shape;
        

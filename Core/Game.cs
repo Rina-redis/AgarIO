@@ -9,11 +9,12 @@ namespace AgarIO
 {
     class Game
     {
-        Text text;
+        Text textToDraw = new Text(); // должен быть как юай
         Player hero;
         Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");
         public List<PlayableObject> allCircleToDraw = new List<PlayableObject>();     
         public List<Food> allFood = new List<Food>();
+        public List<Bot> botList;
         public List <EatableObject> allThingsWhichAreEatble = new List<EatableObject>();
 
         public void Start()
@@ -22,17 +23,18 @@ namespace AgarIO
             RenderWindow window = setupRenderWindow();
             allThingsWhichAreEatble.Add(hero);
          
-            CreateBots(5);
+            CreateBots(1);
                      
             while (window.IsOpen)
             {
-                text = hero.ChangeText(font);
+                textToDraw = hero.ChangeText(font);
                 SpawnFood(allThingsWhichAreEatble, 100);
               
                 window.Clear(Color.White);
                 hero.TryEat(allThingsWhichAreEatble);
                 BotsCycle();
 
+                
                 DrawAllObjects(window);                             
                 window.DispatchEvents();
                 window.Display();
@@ -43,25 +45,30 @@ namespace AgarIO
         {
             hero.SetCoordinateForMovement(e);
         }
+        public void OnKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Code == Keyboard.Key.F)
+            {
+                int botNumber = GetRandomBotNumber();
+                hero.ChangeCurrentBodyToBot(botList, botNumber);
+            }
+        }
+
+        public void Change(Player player, List<Bot> bots)
+        {
+            int botNumber = GetRandomBotNumber();          
+          //  Player newPlayer = bots[botNumber];
+        }
         static void WindowClosed(object sender, EventArgs e)
         {
             RenderWindow w = (RenderWindow)sender;
             w.Close();
         }
-        //public Text SetupText()
-        //{
-        //    //Font font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\font.ttf");
-        //    Text text = new Text("v f xv",font);
-        //    text.CharacterSize = 24;
-        //    text.FillColor = Color.Red;
-        //    text.Position = new Vector2f(100, 100);            
-        //    return text;
 
-        //}
         public void DrawAllObjects(object sender)
         {
             RenderWindow w = (RenderWindow)sender;
-            w.Draw(text);
+            w.Draw(textToDraw);
             foreach (EatableObject objectToDraw in allThingsWhichAreEatble)
             {
                 w.Draw(objectToDraw.shape);
@@ -69,6 +76,11 @@ namespace AgarIO
             w.Draw(hero.shape);
         }
 
+        public int GetRandomBotNumber()
+        {
+            Random random = new Random();
+            return random.Next(0, botList.Count);
+        }
         public void SpawnFood(List<EatableObject> foodPieces, int numberOfFood)
         {
             for (int i = foodPieces.Count; i < numberOfFood; i++)
@@ -82,6 +94,7 @@ namespace AgarIO
         {
             RenderWindow window = new RenderWindow(new VideoMode(Constants.windowWidth, Constants.windowHeight), "Game window");
             window.SetFramerateLimit(1000);
+            window.KeyPressed += OnKeyPressed;
             window.MouseMoved += OnMouseMoved;
             window.Closed += WindowClosed;
             return window;
@@ -97,12 +110,13 @@ namespace AgarIO
 
         public void BotsCycle()
         {
-  
+            botList = new List<Bot>();
             for (int i = 0; i < allThingsWhichAreEatble.Count - 1; i++)
             {
                 if (allThingsWhichAreEatble[i] is Bot)
-                {
+                {                  
                     Bot newBot = (Bot)allThingsWhichAreEatble[i];
+                    botList.Add(newBot);
                     newBot.Cycle(allThingsWhichAreEatble);
                 }
 

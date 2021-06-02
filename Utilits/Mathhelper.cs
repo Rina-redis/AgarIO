@@ -7,7 +7,7 @@ using SFML.System;
 
 namespace AgarIO
 {
-    class MathHelper
+    public static class MathHelper
     {
         public static bool CheckIntersectionCircleVsCircle(EatableObject circle1, EatableObject circle2)
         {
@@ -25,6 +25,11 @@ namespace AgarIO
 
             return distanceToPoint;
         }
-           
+        public static float NextFloat(this Random rand, float a, float b)
+        {
+            float value = (float)rand.NextDouble();
+            return value * (b - a) + a;
+        }
+
     }
 }
