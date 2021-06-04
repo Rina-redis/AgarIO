@@ -8,7 +8,7 @@ using SFML.System;
 
 namespace AgarIO
 {
-    class Bot: PlayableObject
+    class Bot: Actor
     {        
         public Bot()
         {
@@ -18,10 +18,21 @@ namespace AgarIO
             shape.Radius = 25;
             speed = 0.05f;
         }
-        public void Cycle(List<EatableObject> foodPieces)
+        public void Cycle(List<EatableObject> foodPieces, List<EatableObject> players)
         {
             EatableObject nearestFood = NearestFood(foodPieces);
             if(nearestFood!= null)
+            {
+                Move(nearestFood.shape.Position);//mde
+                TryEatNearestFood(nearestFood, foodPieces);
+            }
+            else
+            {
+                Move(RandomVector());
+            }
+
+            EatableObject nearestPlayer = NearestFood(players);
+            if (nearestFood != null)
             {
                 Move(nearestFood.shape.Position);//mde
                 TryEatNearestFood(nearestFood, foodPieces);

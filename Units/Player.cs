@@ -8,7 +8,7 @@ using SFML.Graphics;
 
 namespace AgarIO
 {
-    class Player: PlayableObject
+    class Player: Actor
     {
         Text textWithRadius;
         public Player()
@@ -36,10 +36,23 @@ namespace AgarIO
         {
             CircleShape tempShape = shape;
 
-            PlayableObject newPlayer = bots[randomBotNumber];
+            Actor newPlayer = bots[randomBotNumber];
             shape = newPlayer.shape;
 
             bots[randomBotNumber].shape = tempShape;
+        }
+        public void TryEat(List<Food> foodPieces, List<Bot> bots)
+        {
+            TryEat(foodPieces);
+            for (int i = 0; i < bots.Count - 1; i++)
+            {
+                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(bots[i], this); //need to check radius of objeckt
+                if (intersect)
+                {
+                    bots.Remove(bots[i]);
+                    IncreaseRadius(bots[i]);
+                }
+            }
         }
     }
 }

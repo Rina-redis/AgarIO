@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using SFML.System;
+using Game.Interfaces;
 using SFML.Window;
 using SFML.Graphics;
 
 namespace AgarIO
 {
-    public class EatableObject
+    public class EatableObject : IEatable
     {
         public CircleShape shape;
        

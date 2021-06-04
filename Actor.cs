@@ -2,11 +2,12 @@
 using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
+using Game.Interfaces;
 using System;
 
 namespace AgarIO
 {
-    class PlayableObject : EatableObject
+    class Actor : EatableObject
     {
         public float speed = 3f; //must change with changing radius       
           
@@ -38,7 +39,7 @@ namespace AgarIO
             Vector2f randomDirection = new Vector2f((float)random.NextFloat(-1,1), (float)random.NextFloat(-1, 1));
             return randomDirection;
         }
-        public void TryEat(List<EatableObject> foodPieces)
+        public virtual void TryEat(List<Food> foodPieces)
         {
             for (int i = 0; i < foodPieces.Count - 1; i++)
             {
