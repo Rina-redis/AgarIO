@@ -1,27 +1,31 @@
 ﻿using System;
 using SFML.System;
 
-namespace AgarIO
+namespace AgarIO.Utilits
 {
     public static class MathHelper
     {
-        public static bool CheckIntersectionCircleVsCircle(EatableObject circle1, EatableObject circle2)
+        private static Random random;
+        static MathHelper()
         {
-            float distance = (float)Math.Sqrt((circle2.GetCenter().X - circle1.GetCenter().X) * (circle2.GetCenter().X - circle1.GetCenter().X) +
-                                              (circle2.GetCenter().Y - circle1.GetCenter().Y) * (circle2.GetCenter().Y - circle1.GetCenter().Y));
-            if (distance < circle2.shape.Radius)
-                return true;
-            return false;
+            random = new Random();
+        }
+        public static bool IsIntersectsCircleVsCircle(EatableObject circle1, EatableObject circle2)
+        {
+            float deltaX = (circle2.GetCenter().X - circle1.GetCenter().X);
+            float deltaY = (circle2.GetCenter().Y - circle1.GetCenter().Y);
+           
+            float distanceSquare = (deltaX*deltaX + deltaY*deltaY);
+            return distanceSquare < circle2.shape.Radius*circle2.shape.Radius;
         }
         public static int RandomNumber(int count)
-        {
-            Random random = new Random();
+        {          
             return random.Next(0, count);
         }
         public static float DistanceToPoint(Vector2f source, Vector2f destination)
         {
-            float distanceToPoint = (float)Math.Sqrt(((destination.X -source.X) *(destination.X - source.X)) +
-                                       ((destination.Y - source.Y) * (destination.Y - source.Y)));
+            float distanceToPoint = (float)Math.Sqrt((destination.X - source.X) * (destination.X - source.X) +
+                                       (destination.Y - source.Y) * (destination.Y - source.Y));
 
             return distanceToPoint;
         }

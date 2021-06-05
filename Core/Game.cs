@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AgarIO.Units;
+using AgarIO.Utilits;
 using SFML.Graphics;
 using SFML.Window;
 
-namespace AgarIO
+namespace AgarIO.Core
 {
     class Game
     {
@@ -11,15 +13,15 @@ namespace AgarIO
         private UI gameUI = new UI();
         private List<Food> food = new List<Food>();
         private List<Bot> bots = new List<Bot>();
-        private List<Player> players= new List<Player>(); 
-      
+        private List<Player> players = new List<Player>();
+
         public void Start()
         {
-            SetupGame();                   
+            SetupGame();
             while (CanPlay())
             {
                 GameCycle();
-            }         
+            }
         }
         private void SetupGame()
         {
@@ -28,41 +30,40 @@ namespace AgarIO
             ConnectEvents();
         }
         private void GameCycle()
-        {                       
-            SpawnFood(food, 100);          
-            gameUI.window.Clear(Color.White);
-
+        {
+            SpawnFood(food, 100);//
             hero.TryEat(food, bots);
-            gameUI.DrawText(hero.GetRadius());
             BotsCycle();
 
+            gameUI.window.Clear(Color.White);
+            gameUI.DrawText(hero.GetRadius());          
             DrawAllObjectsWithUi();
             gameUI.EndUi();
         }
-       
-        private void SpawnFood(List<Food> foodPieces, int numberOfFood)
+
+        private void SpawnFood(List<Food> foofList, int numberOfFood)
         {
-            for (int i = foodPieces.Count; i < numberOfFood; i++)
-            {                 
+            for (int i = foofList.Count; i < numberOfFood; i++)
+            {
                 Food pieceOfFood = new Food();
-                foodPieces.Add(pieceOfFood);
+                foofList.Add(pieceOfFood);
             }
         }
-      
+
         private void CreateBots(int numberOfBots)
         {
-            for(int i=1; i<=numberOfBots; i++)
+            for (int i = 1; i <= numberOfBots; i++)
             {
                 Bot newBot = new Bot();
-                bots.Add(newBot);             
+                bots.Add(newBot);
             }
         }
 
         private void BotsCycle()
-        {          
-            foreach(Bot bot in bots)
+        {
+            foreach (Bot bot in bots)
             {
-               bot.Cycle(food, players);
+                bot.Cycle(food, players);
             }
         }
         private void DrawAllObjectsWithUi()
@@ -109,7 +110,7 @@ namespace AgarIO
             else
             {
                 return false;
-            }           
+            }
         }
     }
 }

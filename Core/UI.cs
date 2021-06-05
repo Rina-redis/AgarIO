@@ -3,7 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 
 
-namespace AgarIO
+namespace AgarIO.Core
 {
     class UI
     {
@@ -16,8 +16,8 @@ namespace AgarIO
         }
         public void Init()
         {
-           font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");
-           window = setupRenderWindow();
+            font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");
+            window = setupRenderWindow();
         }
         private RenderWindow setupRenderWindow()
         {
@@ -27,7 +27,7 @@ namespace AgarIO
         }
         public void DrawText(int radius)
         {
-            Text textWithRadius = new Text("Current radius:  " + (radius).ToString(), font);
+            Text textWithRadius = new Text("Current radius:  " + radius.ToString(), font);
             textWithRadius.CharacterSize = 24;
             textWithRadius.FillColor = Color.Red;
             textWithRadius.Position = new Vector2f(100, 100);
@@ -36,7 +36,7 @@ namespace AgarIO
         public void EndUi()
         {
             window.DispatchEvents();
-            window.Display();          
+            window.Display();
         }
     }
 }

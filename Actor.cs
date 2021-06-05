@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFML.System;
 using System;
+using AgarIO.Utilits;
 
 namespace AgarIO
 {
@@ -38,7 +39,7 @@ namespace AgarIO
         {         
             for (int index = 0; index < objektsInGame.Count - 1; index++)
             {
-                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(objektsInGame[index] as EatableObject, this); //need to check radius of objeckt
+                bool intersect = MathHelper.IsIntersectsCircleVsCircle(objektsInGame[index] as EatableObject, this); //need to check radius of objeckt
                 if (intersect)
                 {            
                     Eat(objektsInGame[index], objektsInGame);                                    

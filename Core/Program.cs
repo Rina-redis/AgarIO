@@ -2,15 +2,15 @@
 using SFML.Graphics;
 using System;
 
-namespace AgarIO
+namespace AgarIO.Core
 {
     class Program
     {
         static void Main(string[] args)
         {
             Game game = new Game();
-            game.Start();         
-        }      
+            game.Start();
+        }
     }
- 
+
 }

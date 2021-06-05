@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AgarIO.Utilits;
 using SFML.Graphics;
 using SFML.System;
 
 
-namespace AgarIO
+namespace AgarIO.Units
 {
     class Bot : Actor
     {
@@ -23,18 +24,18 @@ namespace AgarIO
             {
                 Move(nearestFood.shape.Position);
                 TryEat(foodPieces);
-               // TryEat(players);
+                // TryEat(players);
             }
             else
             {
                 Move(RandomVector());
-            }    
+            }
         }
 
         public Food NearestFood(List<Food> foodPieces)
         {
             Food nearestFood = null;
-            float nearestFoodDistance = 2000;
+            float nearestFoodDistance = 2500; //patamushta tak nada
             foreach (Food food in foodPieces)
             {
                 float tempNearestFoodDistance = MathHelper.DistanceToPoint(food.shape.Position, shape.Position);
