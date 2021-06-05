@@ -4,6 +4,7 @@ using System.Text;
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
+using NPOI.SS.Formula.Functions;
 
 namespace AgarIO
 {
@@ -17,7 +18,11 @@ namespace AgarIO
                 return true;
             return false;
         }
-
+        public static int RandomNumber(int count)
+        {
+            Random random = new Random();
+            return random.Next(0, count);
+        }
         public static float DistanceToPoint(Vector2f source, Vector2f destination)
         {
             float distanceToPoint = (float)Math.Sqrt(((destination.X -source.X) *(destination.X - source.X)) +

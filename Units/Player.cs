@@ -4,33 +4,28 @@ using System.Text;
 using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
+using System.Linq;
 
 
 namespace AgarIO
 {
     class Player: Actor
     {
-        Text textWithRadius;
+
         public Player()
         {
             shape = new CircleShape();
             shape.FillColor = Color.Red;
             shape.Radius = 30;
             shape.Position = new Vector2f(200, 200);
-           // textWithRadius = text;
+          
         }
         public void SetCoordinateForMovement(MouseMoveEventArgs e)
         {
             Move(new Vector2f(e.X, e.Y));
         }
-        public Text ChangeText(Font font)
-        {         
-            textWithRadius = new Text("Current radius:  "+((int)shape.Radius).ToString(), font);
-            textWithRadius.CharacterSize = 24;
-            textWithRadius.FillColor = Color.Red;
-            textWithRadius.Position = new Vector2f(100, 100);
-            return textWithRadius;
-        }
+        public int GetRadius() => (int)shape.Radius;
+        
 
         public void ChangeCurrentBodyToBot(List<Bot> bots, int randomBotNumber)
         {
@@ -43,7 +38,7 @@ namespace AgarIO
         }
         public void TryEat(List<Food> foodPieces, List<Bot> bots)
         {
-            TryEat(foodPieces);
+            TryEatFood(foodPieces);
             for (int i = 0; i < bots.Count - 1; i++)
             {
                 bool intersect = MathHelper.CheckIntersectionCircleVsCircle(bots[i], this); //need to check radius of objeckt

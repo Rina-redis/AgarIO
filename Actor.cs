@@ -2,7 +2,6 @@
 using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
-using Game.Interfaces;
 using System;
 
 namespace AgarIO
@@ -20,18 +19,16 @@ namespace AgarIO
                 {
                     Vector2f directionTemp = new Vector2f(speed * (direction.X - GetCenter().X) / distance,
                                                           speed * (direction.Y - GetCenter().Y) / distance);
-                    Vector2f newPos = shape.Position;
-                    if (newPos.X < 0 || newPos.Y < 0)
-                    {
-                        newPos += RandomVector();
-                    }
-                    else
-                     {
-                        newPos += directionTemp;
-                     }
+                    Vector2f newPos = shape.Position;            
+                    newPos += directionTemp;
                     shape.Position = newPos;
                 }
             }
+        }
+        public void EatFood(Food objectToEat, List<Food> allFood)
+        {
+            allFood.Remove(objectToEat);
+            IncreaseRadius(objectToEat);
         }
         public Vector2f RandomVector()
         {
@@ -39,15 +36,14 @@ namespace AgarIO
             Vector2f randomDirection = new Vector2f((float)random.NextFloat(-1,1), (float)random.NextFloat(-1, 1));
             return randomDirection;
         }
-        public virtual void TryEat(List<Food> foodPieces)
+        public void TryEatFood(List<Food> allFoodInGame)
         {
-            for (int i = 0; i < foodPieces.Count - 1; i++)
+            for (int indexOfFood = 0; indexOfFood < allFoodInGame.Count - 1; indexOfFood++)
             {
-                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(foodPieces[i], this); //need to check radius of objeckt
+                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(allFoodInGame[indexOfFood], this); //need to check radius of objeckt
                 if (intersect)
                 {
-                    foodPieces.Remove(foodPieces[i]);
-                    IncreaseRadius(foodPieces[i]);
+                    EatFood(allFoodInGame[indexOfFood], allFoodInGame);
                 }
             }
         }
