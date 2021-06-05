@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SFML.Window;
 using SFML.Graphics;
 using SFML.System;
 
@@ -23,9 +21,9 @@ namespace AgarIO
             Food nearestFood = NearestFood(foodPieces);
             if (nearestFood != null)
             {
-                Move(nearestFood.shape.Position);//mde
+                Move(nearestFood.shape.Position);
                 TryEat(foodPieces);
-                TryEat(players);
+               // TryEat(players);
             }
             else
             {

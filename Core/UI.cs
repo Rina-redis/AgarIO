@@ -1,8 +1,5 @@
 ﻿using SFML.Window;
-using System;
 using SFML.Graphics;
-using System.Collections.Generic;
-using System.Text;
 using SFML.System;
 
 
@@ -12,6 +9,7 @@ namespace AgarIO
     {
         private Font font;
         public RenderWindow window;
+
         public void DrawObject(Drawable shape)
         {
             window.Draw(shape);

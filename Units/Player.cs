@@ -11,14 +11,12 @@ namespace AgarIO
 {
     class Player: Actor
     {
-
         public Player()
         {
             shape = new CircleShape();
             shape.FillColor = Color.Red;
             shape.Radius = 30;
-            shape.Position = new Vector2f(200, 200);
-          
+            shape.Position = new Vector2f(200, 200);       
         }
         public void SetCoordinateForMovement(MouseMoveEventArgs e)
         {
@@ -26,7 +24,6 @@ namespace AgarIO
         }
         public int GetRadius() => (int)shape.Radius;
         
-
         public void ChangeCurrentBodyToBot(List<Bot> bots, int randomBotNumber)
         {
             CircleShape tempShape = shape;
@@ -39,16 +36,7 @@ namespace AgarIO
         public void TryEat(List<Food> foodPieces, List<Bot> bots)
         {
             TryEat(foodPieces);
-            TryEat(bots);
-            //for (int i = 0; i < bots.Count - 1; i++)
-            //{
-            //    bool intersect = MathHelper.CheckIntersectionCircleVsCircle(bots[i], this); //need to check radius of objeckt
-            //    if (intersect)
-            //    {
-            //        bots.Remove(bots[i]);
-            //        IncreaseRadius(bots[i]);
-            //    }
-            //}
+            TryEat(bots);          
         }
     }
 }

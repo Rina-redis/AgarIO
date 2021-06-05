@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using SFML.System;
-using SFML.Window;
-using SFML.Graphics;
 using System;
-using System.Collections;
-using NPOI.SS.Formula.Functions;
 
 namespace AgarIO
 {
