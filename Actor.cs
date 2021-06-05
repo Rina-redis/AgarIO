@@ -3,6 +3,8 @@ using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
 using System;
+using System.Collections;
+using NPOI.SS.Formula.Functions;
 
 namespace AgarIO
 {
@@ -25,10 +27,10 @@ namespace AgarIO
                 }
             }
         }
-        public void EatFood(Food objectToEat, List<Food> allFood)
+        public void Eat<T>(T objectToEat, List<T> listObjects)
         {
-            allFood.Remove(objectToEat);
-            IncreaseRadius(objectToEat);
+            listObjects.Remove(objectToEat);
+            IncreaseRadius(objectToEat as EatableObject);
         }
         public Vector2f RandomVector()
         {
@@ -36,14 +38,14 @@ namespace AgarIO
             Vector2f randomDirection = new Vector2f((float)random.NextFloat(-1,1), (float)random.NextFloat(-1, 1));
             return randomDirection;
         }
-        public void TryEatFood(List<Food> allFoodInGame)
-        {
-            for (int indexOfFood = 0; indexOfFood < allFoodInGame.Count - 1; indexOfFood++)
+        public void TryEat<T>(List<T> objektsInGame)
+        {         
+            for (int index = 0; index < objektsInGame.Count - 1; index++)
             {
-                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(allFoodInGame[indexOfFood], this); //need to check radius of objeckt
+                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(objektsInGame[index] as EatableObject, this); //need to check radius of objeckt
                 if (intersect)
-                {
-                    EatFood(allFoodInGame[indexOfFood], allFoodInGame);
+                {            
+                    Eat(objektsInGame[index], objektsInGame);                                    
                 }
             }
         }

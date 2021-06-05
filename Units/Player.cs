@@ -38,16 +38,17 @@ namespace AgarIO
         }
         public void TryEat(List<Food> foodPieces, List<Bot> bots)
         {
-            TryEatFood(foodPieces);
-            for (int i = 0; i < bots.Count - 1; i++)
-            {
-                bool intersect = MathHelper.CheckIntersectionCircleVsCircle(bots[i], this); //need to check radius of objeckt
-                if (intersect)
-                {
-                    bots.Remove(bots[i]);
-                    IncreaseRadius(bots[i]);
-                }
-            }
+            TryEat(foodPieces);
+            TryEat(bots);
+            //for (int i = 0; i < bots.Count - 1; i++)
+            //{
+            //    bool intersect = MathHelper.CheckIntersectionCircleVsCircle(bots[i], this); //need to check radius of objeckt
+            //    if (intersect)
+            //    {
+            //        bots.Remove(bots[i]);
+            //        IncreaseRadius(bots[i]);
+            //    }
+            //}
         }
     }
 }

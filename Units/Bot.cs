@@ -24,7 +24,8 @@ namespace AgarIO
             if (nearestFood != null)
             {
                 Move(nearestFood.shape.Position);//mde
-                TryEatFood(foodPieces);
+                TryEat(foodPieces);
+                TryEat(players);
             }
             else
             {

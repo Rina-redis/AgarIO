@@ -18,7 +18,7 @@ namespace AgarIO
         public void Start()
         {                   
             players.Add(hero);       
-            CreateBots(1);
+            CreateBots(3);
 
             gameUI.Init();
             gameUI.window.KeyPressed += OnKeyPressed; //kak to po uyebanski...
