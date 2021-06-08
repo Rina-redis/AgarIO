@@ -7,7 +7,7 @@ using SFML.System;
 
 namespace AgarIO.Units
 {
-    class Bot : Actor
+    class Bot : Controller
     {
         public Bot()
         {

@@ -2,13 +2,18 @@
 using SFML.System;
 using System;
 using AgarIO.Utilits;
+using SFML.Graphics;
 
 namespace AgarIO
 {
-    class Actor : EatableObject
+    class Controller : EatableObject
     {
-        public float speed = 3f; //must change with changing radius       
-          
+        public float speed = 3f; //must change with changing radius    
+
+        public Controller(CircleShape shape) : base(shape)
+        {
+        }
+
         public void Move(Vector2f direction)
         {
             if (direction != new Vector2f(0, 0))
@@ -52,5 +57,13 @@ namespace AgarIO
             shape.Radius += objectWhichWasEaten.shape.Radius/3;
         }
         
+        public Vector2f GetCenter()
+        {
+            return new Vector2f(shape.Position.X + shape.Radius, shape.Position.Y + shape.Radius);
+        }
+        public void CenterPosition(Vector2f position)
+        {
+            shape.Position = new Vector2f((position.X - shape.Radius), (position.Y - shape.Radius));
+        }
     }
 }

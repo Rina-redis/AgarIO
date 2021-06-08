@@ -7,18 +7,11 @@ namespace AgarIO
 {
     public class EatableObject
     {
-        public CircleShape shape;      
-        public EatableObject()
+        public CircleShape shape;
+
+        public EatableObject(CircleShape shape)
         {
-            shape = new CircleShape();
-        }
-        public Vector2f GetCenter()
-        {
-            return new Vector2f(shape.Position.X + shape.Radius, shape.Position.Y + shape.Radius);
-        }
-        public void CenterPosition(Vector2f position)
-        {
-            shape.Position = new Vector2f((position.X - shape.Radius), (position.Y - shape.Radius));
+            this.shape = shape;
         }
     }
 }

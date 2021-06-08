@@ -5,7 +5,7 @@ using SFML.Graphics;
 
 namespace AgarIO.Units
 {
-    class Player : Actor
+    class Player : Controller
     {
         public Player()
         {
