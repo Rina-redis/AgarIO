@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using AgarIO.Units;
 using AgarIO.Utilits;
 using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 
 namespace AgarIO.Core
 {
     class Game
     {
-        private Player hero = new Player();
+        private HumanController heroController= new HumanController();
+        private Powel hero;
         private UI gameUI = new UI();
         private List<Food> food = new List<Food>();
-        private List<Bot> bots = new List<Bot>();
-        private List<Player> players = new List<Player>();
+        private List<Powel> actors = new List<Powel>();
+       // private List<Powel> players = new List<Powel>();
 
         public void Start()
         {
+            hero = new Powel(heroController);
+            actors.Add(hero);
             SetupGame();
             while (CanPlay())
             {
@@ -32,7 +36,7 @@ namespace AgarIO.Core
         private void GameCycle()
         {
             SpawnFood(food, 100);//
-            hero.TryEat(food, bots);
+            hero.TryEat(food);
             BotsCycle();
 
             gameUI.window.Clear(Color.White);
@@ -54,21 +58,27 @@ namespace AgarIO.Core
         {
             for (int i = 1; i <= numberOfBots; i++)
             {
-                Bot newBot = new Bot();
-                bots.Add(newBot);
+                AIController botController = new AIController();
+                Powel newBot = new Powel(botController);
+                actors.Add(newBot);
             }
         }
 
         private void BotsCycle()
         {
-            foreach (Bot bot in bots)
+            foreach (Powel actor in actors)
             {
-                bot.Cycle(food, players);
+                if (actor.powelController is AIController) 
+                {
+                    Vector2f directionToMove = actor.powelController.DirectionToMove(actor, food, actors);                    
+                    actor.Move(directionToMove);
+                    actor.TryEat(food);
+                }
             }
         }
         private void DrawAllObjectsWithUi()
         {
-            foreach (EatableObject objectToDraw in bots)
+            foreach (EatableObject objectToDraw in actors)
             {
                 gameUI.DrawObject(objectToDraw.shape);
             }
@@ -86,14 +96,15 @@ namespace AgarIO.Core
         }
         private void OnMouseMoved(object sender, MouseMoveEventArgs e)
         {
-            hero.SetCoordinateForMovement(e);
+            Vector2f directionToMove = heroController.MouseMoved(e);
+            hero.Move(directionToMove);
         }
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
             if (e.Code == Keyboard.Key.F)
             {
-                int botNumber = MathHelper.RandomNumber(bots.Count);
-                hero.ChangeCurrentBodyToBot(bots, botNumber);
+                int botNumber = MathHelper.RandomNumber(actors.Count);
+              //  hero.ChangeCurrentBodyToBot(bots, botNumber);
             }
         }
         private static void WindowClosed(object sender, EventArgs e)

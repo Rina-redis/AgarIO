@@ -9,9 +9,13 @@ namespace AgarIO
     {
         public CircleShape shape;
 
-        public EatableObject(CircleShape shape)
+        public EatableObject()
         {
-            this.shape = shape;
+            shape = new CircleShape();
+        }
+        public Vector2f GetCenter()
+        {
+            return new Vector2f(shape.Position.X + shape.Radius, shape.Position.Y + shape.Radius);
         }
     }
 }
