@@ -3,12 +3,11 @@ using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
 
-namespace AgarIO
+namespace AgarIO.Units
 {
     public class EatableObject
     {
         public CircleShape shape;
-
         public EatableObject()
         {
             shape = new CircleShape();

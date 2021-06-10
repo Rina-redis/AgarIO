@@ -1,10 +1,8 @@
 ﻿using SFML.System;
 using SFML.Window;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AgarIO
+
+namespace AgarIO.Controllers
 {
     class HumanController : Controller
     {

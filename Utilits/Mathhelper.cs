@@ -1,4 +1,5 @@
 ﻿using System;
+using AgarIO.Units;
 using SFML.System;
 
 namespace AgarIO.Utilits
@@ -24,8 +25,10 @@ namespace AgarIO.Utilits
         }
         public static float DistanceToPoint(Vector2f source, Vector2f destination)
         {
-            float distanceToPoint = (float)Math.Sqrt((destination.X - source.X) * (destination.X - source.X) +
-                                       (destination.Y - source.Y) * (destination.Y - source.Y));
+            float deltaX = destination.X - source.X;
+            float deltaY = destination.Y - source.Y;
+            float distanceToPoint = (float)Math.Sqrt(deltaX * deltaX +
+                                                     deltaY * deltaY);
 
             return distanceToPoint;
         }

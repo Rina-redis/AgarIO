@@ -5,7 +5,7 @@ using SFML.Graphics;
 
 namespace AgarIO.Units
 {
-     class Food : EatableObject
+    class Food : EatableObject
     {
         public Food()
         {

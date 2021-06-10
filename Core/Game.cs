@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AgarIO.Controllers;
 using AgarIO.Units;
 using AgarIO.Utilits;
 using SFML.Graphics;
@@ -11,15 +12,14 @@ namespace AgarIO.Core
     class Game
     {
         private HumanController heroController= new HumanController();
-        private Powel hero;
+        private Actor hero;
         private UI gameUI = new UI();
         private List<Food> food = new List<Food>();
-        private List<Powel> actors = new List<Powel>();
-       // private List<Powel> players = new List<Powel>();
+        private List<Actor> actors = new List<Actor>();
 
         public void Start()
         {
-            hero = new Powel(heroController);
+            hero = new Actor(heroController);
             actors.Add(hero);
             SetupGame();
             while (CanPlay())
@@ -27,21 +27,31 @@ namespace AgarIO.Core
                 GameCycle();
             }
         }
+        private void GameCycle()
+        {
+            LogicPart();
+            UiPart();
+        }
+
+
         private void SetupGame()
         {
-            CreateBots(2);
+            CreateBots(1);
             gameUI.Init();
             ConnectEvents();
         }
-        private void GameCycle()
+   
+        private void LogicPart()
         {
             SpawnFood(food, 100);//
             hero.TryEat(food);
             BotsCycle();
-
+        }
+        private void UiPart()
+        {
             gameUI.window.Clear(Color.White);
-            gameUI.DrawText(hero.GetRadius());          
-            DrawAllObjectsWithUi();
+            gameUI.DrawText(hero.GetRadius());
+            DrawAllObjects();
             gameUI.EndUi();
         }
 
@@ -59,35 +69,24 @@ namespace AgarIO.Core
             for (int i = 1; i <= numberOfBots; i++)
             {
                 AIController botController = new AIController();
-                Powel newBot = new Powel(botController);
+                Actor newBot = new Actor(botController);
                 actors.Add(newBot);
             }
         }
 
         private void BotsCycle()
         {
-            foreach (Powel actor in actors)
+            foreach (Actor actor in actors)
             {
                 if (actor.powelController is AIController) 
                 {
-                    Vector2f directionToMove = actor.powelController.DirectionToMove(actor, food, actors);                    
+                    Vector2f directionToMove = actor.powelController.CalculateDirectionToMove(actor, food, actors);                    
                     actor.Move(directionToMove);
                     actor.TryEat(food);
                 }
             }
         }
-        private void DrawAllObjectsWithUi()
-        {
-            foreach (EatableObject objectToDraw in actors)
-            {
-                gameUI.DrawObject(objectToDraw.shape);
-            }
-            foreach (EatableObject objectToDraw in food)
-            {
-                gameUI.DrawObject(objectToDraw.shape);
-            }
-            gameUI.DrawObject(hero.shape);
-        }
+        
         private void ConnectEvents()
         {
             gameUI.window.KeyPressed += OnKeyPressed; //kak to po ploho...
@@ -103,8 +102,8 @@ namespace AgarIO.Core
         {
             if (e.Code == Keyboard.Key.F)
             {
-                int botNumber = MathHelper.RandomNumber(actors.Count);
-              //  hero.ChangeCurrentBodyToBot(bots, botNumber);
+                int botNumber = MathHelper.RandomNumber(actors.Count);                      
+                hero.ChangeBody(actors[botNumber]);
             }
         }
         private static void WindowClosed(object sender, EventArgs e)
@@ -122,6 +121,18 @@ namespace AgarIO.Core
             {
                 return false;
             }
+        }
+        private void DrawAllObjects()
+        {
+            foreach (EatableObject objectToDraw in actors)
+            {
+                gameUI.DrawObject(objectToDraw.shape);
+            }
+            foreach (EatableObject objectToDraw in food)
+            {
+                gameUI.DrawObject(objectToDraw.shape);
+            }
+            gameUI.DrawObject(hero.shape);
         }
     }
 }

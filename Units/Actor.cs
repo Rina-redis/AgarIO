@@ -4,17 +4,18 @@ using SFML.Window;
 using SFML.Graphics;
 using System;
 using AgarIO.Utilits;
+using AgarIO.Controllers;
 
 namespace AgarIO.Units
 {
-    class Powel : EatableObject
+    class Actor : EatableObject
     {
         public Controller powelController;
         
-        public Powel(Controller PowelController)
+        public Actor()
         {
             Random rand = new Random();
-            powelController = PowelController;
+           // powelController = PowelController;
             shape = new CircleShape();
             shape.Radius = 30;
             shape.Position = new Vector2f(rand.Next(1, 1500), rand.Next(1, 900));
@@ -53,6 +54,12 @@ namespace AgarIO.Units
                     IncreaseRadius(objektsInGame[index] as EatableObject);
                 }
             }
+        }
+        public void ChangeBody(Actor destination)
+        {
+            Controller tempController = powelController;
+            powelController = destination.powelController;
+            destination.powelController = tempController;
         }
     }
 }
