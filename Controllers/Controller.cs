@@ -9,17 +9,31 @@ namespace AgarIO.Controllers
 {
     class Controller
     {
-        Actor dependent;
+        public virtual float speed { get; } = 0.05f;
+        protected Actor dependent;
+        CircleShape shape;
         public Controller(Actor Dependent)
         {
             dependent = Dependent;
+            shape = Dependent.shape;
         }
-        public virtual float speed { get; } = 0.05f; //must change with changing radius    
+         //must change with changing radius    
 
-        public void Eat<T>(T objectToEat, List<T> listObjects)
+      
+        public void Move(Vector2f direction)
         {
-            listObjects.Remove(objectToEat);
-            //IncreaseRadius(objectToEat as EatableObject);
+            if (direction != new Vector2f(0, 0))
+            {
+                float distance = MathHelper.DistanceToPoint(direction, dependent.GetCenter());
+                if (distance > 2)
+                {
+                    Vector2f directionTemp = new Vector2f(speed * (direction.X - dependent.GetCenter().X) / distance,
+                                                          speed * (direction.Y - dependent.GetCenter().Y) / distance);
+                    Vector2f newPos = shape.Position;
+                    newPos += directionTemp;
+                    shape.Position = newPos;
+                }
+            }
         }
         public Vector2f RandomVector()
         {
@@ -31,6 +45,13 @@ namespace AgarIO.Controllers
         public virtual Vector2f CalculateDirectionToMove(Actor currentPowel, List<Food> foodPieces, List<Actor> players)
         {
             return new Vector2f(0, 0);
+        }
+
+        public void Cycle(List<Food> foodPieces, List<Actor> players)
+        {
+            Vector2f directionToMove = CalculateDirectionToMove(dependent, foodPieces, players);
+            Move(directionToMove);
+            dependent.TryEat(foodPieces);
         }
     }
 }

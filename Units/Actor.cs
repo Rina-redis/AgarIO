@@ -23,22 +23,7 @@ namespace AgarIO.Units
         }
        
         public int GetRadius() => (int)shape.Radius;
-
-        public void Move(Vector2f direction)
-        {
-            if (direction != new Vector2f(0, 0))
-            {
-                float distance = MathHelper.DistanceToPoint(direction, GetCenter());
-                if (distance > 2)
-                {
-                    Vector2f directionTemp = new Vector2f(powelController.speed * (direction.X - GetCenter().X) / distance,
-                                                          powelController.speed * (direction.Y - GetCenter().Y) / distance);
-                    Vector2f newPos = shape.Position;
-                    newPos += directionTemp;
-                    shape.Position = newPos;
-                }
-            }
-        }
+       
         public void IncreaseRadius(EatableObject objectWhichWasEaten)
         {
             shape.Radius += objectWhichWasEaten.shape.Radius / 3;
@@ -50,10 +35,15 @@ namespace AgarIO.Units
                 bool intersect = MathHelper.IsIntersectsCircleVsCircle(objektsInGame[index] as EatableObject, this); //need to check radius of objeckt
                 if (intersect)
                 {
-                    powelController.Eat(objektsInGame[index], objektsInGame);
+                    Eat(objektsInGame[index], objektsInGame);
                     IncreaseRadius(objektsInGame[index] as EatableObject);
                 }
             }
+        }
+        public void Eat<T>(T objectToEat, List<T> listObjects)
+        {
+            listObjects.Remove(objectToEat);
+            //IncreaseRadius(objectToEat as EatableObject);
         }
         public void ChangeBody(Actor destination)
         {

@@ -8,6 +8,10 @@ namespace AgarIO.Controllers
     class AIController : Controller
     {
         public new float speed = 0.5f;
+        public AIController(Actor Dependent) : base(Dependent)
+        {
+        }
+
         public override Vector2f CalculateDirectionToMove(Actor currentPowel, List<Food> foodPieces, List<Actor> players)
         {
             Food nearestFood = NearestFood(currentPowel, foodPieces);

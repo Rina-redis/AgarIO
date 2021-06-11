@@ -11,15 +11,16 @@ namespace AgarIO.Core
 {
     class Game
     {
-        private HumanController heroController= new HumanController();
-        private Actor hero;
+        private Actor hero = new Actor();
+        private HumanController heroController;       
         private UI gameUI = new UI();
         private List<Food> food = new List<Food>();
         private List<Actor> actors = new List<Actor>();
+        private List<Controller> controllers = new List<Controller>();
 
         public void Start()
         {
-            hero = new Actor(heroController);
+            heroController = new HumanController(hero);
             actors.Add(hero);
             SetupGame();
             while (CanPlay())
@@ -68,22 +69,25 @@ namespace AgarIO.Core
         {
             for (int i = 1; i <= numberOfBots; i++)
             {
-                AIController botController = new AIController();
-                Actor newBot = new Actor(botController);
+                Actor newBot = new Actor();
+                AIController botController = new AIController(newBot);
+                controllers.Add(botController);
                 actors.Add(newBot);
             }
         }
 
         private void BotsCycle()
         {
-            foreach (Actor actor in actors)
+            foreach (AIController actor in controllers)
             {
-                if (actor.powelController is AIController) 
-                {
-                    Vector2f directionToMove = actor.powelController.CalculateDirectionToMove(actor, food, actors);                    
-                    actor.Move(directionToMove);
-                    actor.TryEat(food);
-                }
+
+                actor.Cycle(food, actors);
+                //if (actor.powelController is AIController) 
+                //{
+                //    Vector2f directionToMove = actor.powelController.CalculateDirectionToMove(actor, food, actors);                    
+                //    actor.Move(directionToMove);
+                //    actor.TryEat(food);
+                //}
             }
         }
         
@@ -96,7 +100,7 @@ namespace AgarIO.Core
         private void OnMouseMoved(object sender, MouseMoveEventArgs e)
         {
             Vector2f directionToMove = heroController.MouseMoved(e);
-            hero.Move(directionToMove);
+            heroController.Move(directionToMove);
         }
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
