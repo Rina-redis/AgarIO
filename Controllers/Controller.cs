@@ -47,11 +47,11 @@ namespace AgarIO.Controllers
             return new Vector2f(0, 0);
         }
 
-        public void Cycle(List<Food> foodPieces, List<Actor> players)
+        public virtual void Cycle(List<Food> foodPieces, List<Actor> players)
         {
-            Vector2f directionToMove = CalculateDirectionToMove(dependent, foodPieces, players);
-            Move(directionToMove);
-            dependent.TryEat(foodPieces);
+           // Vector2f directionToMove = CalculateDirectionToMove(dependent, foodPieces, players);
+          //  Move(directionToMove);
+           // dependent.TryEat(foodPieces);
         }
     }
 }

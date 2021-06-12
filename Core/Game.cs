@@ -12,16 +12,18 @@ namespace AgarIO.Core
     class Game
     {
         private Actor hero = new Actor();
-        private HumanController heroController;       
+        private HeroController heroController;       
         private UI gameUI = new UI();
-        private List<Food> food = new List<Food>();
-        private List<Actor> actors = new List<Actor>();
-        private List<Controller> controllers = new List<Controller>();
+        private ListLibrary listLibrary= new ListLibrary();
+      //  private List<Food> food = new List<Food>();
+      //  private List<Actor> actors = new List<Actor>();
+     //   private List<Controller> controllers = new List<Controller>();
 
         public void Start()
         {
-            heroController = new HumanController(hero);
-            actors.Add(hero);
+            heroController = new HeroController(hero);
+            listLibrary.controllers.Add(heroController);
+            listLibrary.actors.Add(hero);
             SetupGame();
             while (CanPlay())
             {
@@ -44,9 +46,9 @@ namespace AgarIO.Core
    
         private void LogicPart()
         {
-            SpawnFood(food, 100);//
-            hero.TryEat(food);
-            BotsCycle();
+            SpawnFood(listLibrary.food, 100);//
+            hero.TryEat(listLibrary.food);
+            ActorsCycle();
         }
         private void UiPart()
         {
@@ -71,23 +73,16 @@ namespace AgarIO.Core
             {
                 Actor newBot = new Actor();
                 AIController botController = new AIController(newBot);
-                controllers.Add(botController);
-                actors.Add(newBot);
+                listLibrary.controllers.Add(botController);
+                listLibrary.actors.Add(newBot);
             }
         }
 
-        private void BotsCycle()
+        private void ActorsCycle()
         {
-            foreach (AIController actor in controllers)
+            foreach (AIController actor in listLibrary.GetAIcontrollers())
             {
-
-                actor.Cycle(food, actors);
-                //if (actor.powelController is AIController) 
-                //{
-                //    Vector2f directionToMove = actor.powelController.CalculateDirectionToMove(actor, food, actors);                    
-                //    actor.Move(directionToMove);
-                //    actor.TryEat(food);
-                //}
+                actor.Cycle(listLibrary.food, listLibrary.actors);                                         
             }
         }
         
@@ -99,15 +94,15 @@ namespace AgarIO.Core
         }
         private void OnMouseMoved(object sender, MouseMoveEventArgs e)
         {
-            Vector2f directionToMove = heroController.MouseMoved(e);
-            heroController.Move(directionToMove);
+            heroController.MouseMoved(e);
+            heroController.Cycle(listLibrary.food, listLibrary.actors);
         }
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
             if (e.Code == Keyboard.Key.F)
             {
-                int botNumber = MathHelper.RandomNumber(actors.Count);                      
-                hero.ChangeBody(actors[botNumber]);
+                int botNumber = MathHelper.RandomNumber(listLibrary.actors.Count);                      
+                hero.ChangeBody(listLibrary.actors[botNumber]);
             }
         }
         private static void WindowClosed(object sender, EventArgs e)
@@ -128,11 +123,15 @@ namespace AgarIO.Core
         }
         private void DrawAllObjects()
         {
-            foreach (EatableObject objectToDraw in actors)
+            //foreach(Drawable drawableObject in listLibrary.GetDrawebleObjects())
+            //{
+            //    gameUI.DrawObject(drawableObject);
+            //}
+            foreach (EatableObject objectToDraw in listLibrary.actors)
             {
                 gameUI.DrawObject(objectToDraw.shape);
             }
-            foreach (EatableObject objectToDraw in food)
+            foreach (EatableObject objectToDraw in listLibrary.food)
             {
                 gameUI.DrawObject(objectToDraw.shape);
             }
