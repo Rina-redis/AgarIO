@@ -20,10 +20,7 @@ namespace AgarIO.Core
      //   private List<Controller> controllers = new List<Controller>();
 
         public void Start()
-        {
-            heroController = new HeroController(hero);
-            listLibrary.controllers.Add(heroController);
-            listLibrary.actors.Add(hero);
+        {           
             SetupGame();
             while (CanPlay())
             {
@@ -39,6 +36,9 @@ namespace AgarIO.Core
 
         private void SetupGame()
         {
+            heroController = new HeroController(hero);
+            listLibrary.controllers.Add(heroController);
+            listLibrary.actors.Add(hero);
             CreateBots(1);
             gameUI.Init();
             ConnectEvents();
