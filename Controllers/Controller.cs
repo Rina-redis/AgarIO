@@ -18,9 +18,7 @@ namespace AgarIO.Controllers
             dependent = Dependent;
             shape = Dependent.shape;
         }
-         //must change with changing radius    
-
-      
+     
         public void Move(Vector2f direction)
         {
             if (direction != new Vector2f(0, 0))
@@ -50,9 +48,9 @@ namespace AgarIO.Controllers
         public CircleShape GetShape() => shape;
         public virtual void Update(List<Food> foodPieces, List<Puppet> players)
         {
-           // Vector2f directionToMove = CalculateDirectionToMove(dependent, foodPieces, players);
-          //  Move(directionToMove);
-           // dependent.TryEat(foodPieces);
+           //get direction
+           //move
+           //try eat food
         }
     }
 }

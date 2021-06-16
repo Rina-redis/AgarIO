@@ -14,6 +14,10 @@ namespace AgarIO.Core
         {
             window.Draw(shape);
         }
+        public void ClearWindow()
+        {
+            window.Clear(Color.White);
+        }
         public void Init()
         {
             font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");

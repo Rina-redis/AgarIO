@@ -4,7 +4,6 @@ using AgarIO.Controllers;
 using AgarIO.Units;
 using AgarIO.Utilits;
 using SFML.Graphics;
-using SFML.System;
 using SFML.Window;
 
 namespace AgarIO.Core
@@ -14,7 +13,7 @@ namespace AgarIO.Core
         private Puppet hero = new Puppet();
         private HeroController heroController;       
         private UI gameUI = new UI();
-        private ListLibrary listLibrary= new ListLibrary();
+        private ObjectsLibrary gameLibrary= new ObjectsLibrary();
 
         public void Start()
         {           
@@ -29,25 +28,22 @@ namespace AgarIO.Core
             LogicPart();
             UiPart();
         }
-
-
         private void SetupGame()
         {
-            heroController = new HeroController(hero);
-            listLibrary.AddController(heroController);
-            CreateBots(1);
+            CreateHero();
+            CreateBots(3);
             gameUI.Init();
             ConnectEvents();
         }
    
         private void LogicPart()
         {
-            SpawnFood(listLibrary.food, 100);//          
+            SpawnFood(gameLibrary.food, 100);//          
             ActorsCycle();
         }
         private void UiPart()
         {
-            gameUI.window.Clear(Color.White);          
+            gameUI.ClearWindow();
             DrawAllObjects();
             gameUI.Dispatch();
         }
@@ -60,22 +56,26 @@ namespace AgarIO.Core
                 foofList.Add(pieceOfFood);               
             }
         }
-
+        private void CreateHero()
+        {
+            heroController = new HeroController(hero);
+            gameLibrary.AddController(heroController);
+        }
         private void CreateBots(int numberOfBots)
         {
             for (int i = 1; i <= numberOfBots; i++)
             {
-                Puppet newBot = new Puppet();
-                AIController botController = new AIController(newBot);
-                listLibrary.AddController(botController);
+                Puppet bot = new Puppet();
+                AIController botController = new AIController(bot);
+                gameLibrary.AddController(botController);
             }
         }
 
         private void ActorsCycle()
         {
-            foreach (IUpdatable actor in listLibrary.updatables)
+            foreach (IUpdatable actor in gameLibrary.updatables)
             {
-                actor.Update(listLibrary.food, listLibrary.actors);                                         
+                actor.Update(gameLibrary.food, gameLibrary.actors);                                         
             }
         }
         
@@ -90,8 +90,8 @@ namespace AgarIO.Core
         {
             if (e.Code == Keyboard.Key.F)
             {
-                int botNumber = MathHelper.RandomNumber(listLibrary.actors.Count);     //                 
-                hero.ChangeBody(listLibrary.actors[botNumber]);
+                int botNumber = MathHelper.RandomNumber(gameLibrary.actors.Count);     //                 
+                hero.ChangeBody(gameLibrary.actors[botNumber]);
             }
         }
         private static void WindowClosed(object sender, EventArgs e)
@@ -113,11 +113,11 @@ namespace AgarIO.Core
         private void DrawAllObjects()
         {
             gameUI.DrawText(hero.GetRadius());
-            foreach (Drawable drawableObject in listLibrary.drawableObjects)
+            foreach (Drawable drawableObject in gameLibrary.drawableObjects)
             {
                 gameUI.DrawObject(drawableObject);
             }
-            foreach (EatableObject objectToDraw in listLibrary.food)
+            foreach (EatableObject objectToDraw in gameLibrary.food)
             {
                 gameUI.DrawObject(objectToDraw.shape);
             }

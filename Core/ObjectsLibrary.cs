@@ -1,14 +1,12 @@
 ﻿using AgarIO.Controllers;
 using AgarIO.Units;
-using NPOI.SS.Formula.Functions;
 using SFML.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AgarIO.Core
 {
-    class ListLibrary
+    class ObjectsLibrary
     {
         public List<Puppet> actors;
         public List<Controller> controllers;
@@ -17,14 +15,14 @@ namespace AgarIO.Core
         public List<Drawable> drawableObjects;      
         public List<Food> food;
 
-        private static ListLibrary instance;
-        public static ListLibrary getInstance()
+        private static ObjectsLibrary instance;
+        public static ObjectsLibrary getInstance()
         {
             if (instance == null)
-                instance = new ListLibrary();
+                instance = new ObjectsLibrary();
             return instance;
         }
-        public ListLibrary()
+        public ObjectsLibrary()
         {
             drawableObjects = new List<Drawable>();
             updatables = new List<IUpdatable>();
