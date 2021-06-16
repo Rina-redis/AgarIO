@@ -4,15 +4,16 @@ using System;
 using AgarIO.Utilits;
 using SFML.Graphics;
 using AgarIO.Units;
+using AgarIO.Core;
 
 namespace AgarIO.Controllers
 {
-    class Controller
+    class Controller : IUpdatable
     {
         public virtual float speed { get; } = 0.05f;
-        protected Actor dependent;
+        protected Puppet dependent;
         CircleShape shape;
-        public Controller(Actor Dependent)
+        public Controller(Puppet Dependent)
         {
             dependent = Dependent;
             shape = Dependent.shape;
@@ -42,12 +43,12 @@ namespace AgarIO.Controllers
             return randomDirection;
         }
 
-        public virtual Vector2f CalculateDirectionToMove(Actor currentPowel, List<Food> foodPieces, List<Actor> players)
+        public virtual Vector2f CalculateDirectionToMove(Puppet currentPowel, List<Food> foodPieces, List<Puppet> players)
         {
             return new Vector2f(0, 0);
         }
-
-        public virtual void Cycle(List<Food> foodPieces, List<Actor> players)
+        public CircleShape GetShape() => shape;
+        public virtual void Update(List<Food> foodPieces, List<Puppet> players)
         {
            // Vector2f directionToMove = CalculateDirectionToMove(dependent, foodPieces, players);
           //  Move(directionToMove);

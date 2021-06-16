@@ -8,16 +8,16 @@ namespace AgarIO.Controllers
     class HeroController : Controller
     {
         public Vector2f directionToMove;
-        public HeroController(Actor Dependent) : base(Dependent)
+        public HeroController(Puppet Dependent) : base(Dependent)
         {
         }
 
-        public override float speed { get; } = 3f;
-        public void MouseMoved(MouseMoveEventArgs e)
+        public override float speed { get; } = 0.1f;
+        public void MouseMoved(object sender, MouseMoveEventArgs e)
         {
             directionToMove = new Vector2f(e.X, e.Y);
         }
-        public override void Cycle(List<Food> foodPieces, List<Actor> players)
+        public override void Update(List<Food> foodPieces, List<Puppet> players)
         {
             Move(directionToMove);
             dependent.TryEat(foodPieces);

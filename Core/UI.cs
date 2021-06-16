@@ -17,9 +17,9 @@ namespace AgarIO.Core
         public void Init()
         {
             font = new Font(@"H:\програмирование\AgarIO\bin\Debug\Data\milk.otf");
-            window = setupRenderWindow();
+            window = SetupRenderWindow();
         }
-        private RenderWindow setupRenderWindow()
+        private RenderWindow SetupRenderWindow()
         {
             RenderWindow window = new RenderWindow(new VideoMode(Constants.windowWidth, Constants.windowHeight), "Game window");
             window.SetFramerateLimit(1000);
@@ -33,7 +33,7 @@ namespace AgarIO.Core
             textWithRadius.Position = new Vector2f(100, 100);
             DrawObject(textWithRadius);
         }
-        public void EndUi()
+        public void Dispatch()
         {
             window.DispatchEvents();
             window.Display();

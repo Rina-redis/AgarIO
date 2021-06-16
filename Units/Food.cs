@@ -2,14 +2,14 @@
 using SFML.System;
 using SFML.Window;
 using SFML.Graphics;
+using AgarIO.Core;
 
 namespace AgarIO.Units
 {
-    class Food : EatableObject
+    class Food : EatableObject 
     {
         public Food()
         {
-            shape = new CircleShape();
             Random rand = new Random();
             int positionX = rand.Next(1, 1600);
             int positionY = rand.Next(1, 900);

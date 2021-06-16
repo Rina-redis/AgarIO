@@ -11,13 +11,10 @@ namespace AgarIO.Core
 {
     class Game
     {
-        private Actor hero = new Actor();
+        private Puppet hero = new Puppet();
         private HeroController heroController;       
         private UI gameUI = new UI();
         private ListLibrary listLibrary= new ListLibrary();
-      //  private List<Food> food = new List<Food>();
-      //  private List<Actor> actors = new List<Actor>();
-     //   private List<Controller> controllers = new List<Controller>();
 
         public void Start()
         {           
@@ -37,8 +34,7 @@ namespace AgarIO.Core
         private void SetupGame()
         {
             heroController = new HeroController(hero);
-            listLibrary.controllers.Add(heroController);
-            listLibrary.actors.Add(hero);
+            listLibrary.AddController(heroController);
             CreateBots(1);
             gameUI.Init();
             ConnectEvents();
@@ -46,16 +42,14 @@ namespace AgarIO.Core
    
         private void LogicPart()
         {
-            SpawnFood(listLibrary.food, 100);//
-            hero.TryEat(listLibrary.food);
+            SpawnFood(listLibrary.food, 100);//          
             ActorsCycle();
         }
         private void UiPart()
         {
-            gameUI.window.Clear(Color.White);
-            gameUI.DrawText(hero.GetRadius());
+            gameUI.window.Clear(Color.White);          
             DrawAllObjects();
-            gameUI.EndUi();
+            gameUI.Dispatch();
         }
 
         private void SpawnFood(List<Food> foofList, int numberOfFood)
@@ -63,7 +57,7 @@ namespace AgarIO.Core
             for (int i = foofList.Count; i < numberOfFood; i++)
             {
                 Food pieceOfFood = new Food();
-                foofList.Add(pieceOfFood);
+                foofList.Add(pieceOfFood);               
             }
         }
 
@@ -71,37 +65,32 @@ namespace AgarIO.Core
         {
             for (int i = 1; i <= numberOfBots; i++)
             {
-                Actor newBot = new Actor();
+                Puppet newBot = new Puppet();
                 AIController botController = new AIController(newBot);
-                listLibrary.controllers.Add(botController);
-                listLibrary.actors.Add(newBot);
+                listLibrary.AddController(botController);
             }
         }
 
         private void ActorsCycle()
         {
-            foreach (AIController actor in listLibrary.GetAIcontrollers())
+            foreach (IUpdatable actor in listLibrary.updatables)
             {
-                actor.Cycle(listLibrary.food, listLibrary.actors);                                         
+                actor.Update(listLibrary.food, listLibrary.actors);                                         
             }
         }
         
         private void ConnectEvents()
         {
             gameUI.window.KeyPressed += OnKeyPressed; //kak to po ploho...
-            gameUI.window.MouseMoved += OnMouseMoved;
+            gameUI.window.MouseMoved += heroController.MouseMoved;
             gameUI.window.Closed += WindowClosed;
         }
-        private void OnMouseMoved(object sender, MouseMoveEventArgs e)
-        {
-            heroController.MouseMoved(e);
-            heroController.Cycle(listLibrary.food, listLibrary.actors);
-        }
+     
         private void OnKeyPressed(object sender, KeyEventArgs e)
         {
             if (e.Code == Keyboard.Key.F)
             {
-                int botNumber = MathHelper.RandomNumber(listLibrary.actors.Count);                      
+                int botNumber = MathHelper.RandomNumber(listLibrary.actors.Count);     //                 
                 hero.ChangeBody(listLibrary.actors[botNumber]);
             }
         }
@@ -123,19 +112,15 @@ namespace AgarIO.Core
         }
         private void DrawAllObjects()
         {
-            //foreach(Drawable drawableObject in listLibrary.GetDrawebleObjects())
-            //{
-            //    gameUI.DrawObject(drawableObject);
-            //}
-            foreach (EatableObject objectToDraw in listLibrary.actors)
+            gameUI.DrawText(hero.GetRadius());
+            foreach (Drawable drawableObject in listLibrary.drawableObjects)
             {
-                gameUI.DrawObject(objectToDraw.shape);
+                gameUI.DrawObject(drawableObject);
             }
             foreach (EatableObject objectToDraw in listLibrary.food)
             {
                 gameUI.DrawObject(objectToDraw.shape);
             }
-            gameUI.DrawObject(hero.shape);
         }
     }
 }

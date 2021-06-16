@@ -1,5 +1,6 @@
 ﻿using AgarIO.Controllers;
 using AgarIO.Units;
+using NPOI.SS.Formula.Functions;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,34 +10,58 @@ namespace AgarIO.Core
 {
     class ListLibrary
     {
-        public List<Actor> actors;
+        public List<Puppet> actors;
         public List<Controller> controllers;
         public List<AIController> aIControllers;
-        public List<Drawable> drawableObjects;
-        public List<HeroController> heroControllers;
+        public List<IUpdatable> updatables;
+        public List<Drawable> drawableObjects;      
         public List<Food> food;
 
+        private static ListLibrary instance;
+        public static ListLibrary getInstance()
+        {
+            if (instance == null)
+                instance = new ListLibrary();
+            return instance;
+        }
         public ListLibrary()
         {
             drawableObjects = new List<Drawable>();
+            updatables = new List<IUpdatable>();
             aIControllers = new List<AIController>();
-            actors = new List<Actor>();
-            controllers = new List<Controller>();
-            heroControllers = new List<HeroController>();
+            actors = new List<Puppet>();
+            controllers = new List<Controller>();          
             food = new List<Food>();
         }
-        public List<Drawable> GetDrawebleObjects()
+        public void AddController(Controller controller)
         {
-            foreach (Drawable shape in food)
-            {
-                drawableObjects.Add(shape);
-            }
-            foreach (Drawable shape in actors)
-            {
-                drawableObjects.Add(shape);
-            }
-            return drawableObjects;
+            updatables.Add(controller);
+            drawableObjects.Add(controller.GetShape());
         }
+        //public void Add<T>(T item)
+        //{
+        //    switch (typeof(T).Name)
+        //    {
+        //        case "Food":
+        //            food.Add(item as Food);
+        //            break;
+        //        case "Puppet":
+        //            actors.Add(item as Puppet);
+        //            break;
+        //        case "HeroController":
+        //            controllers.Add(item as Controller);
+        //            break;
+        //        case "AIController":
+        //            controllers.Add(item as Controller);
+        //            break;
+        //        case "IUpdatable":
+        //            updatables.Add(item as IUpdatable);
+        //            break;
+        //        case "Drawable":
+        //            drawableObjects.Add(item as Drawable);
+        //            break;
+        //    }
+        //}
         public List<AIController> GetAIcontrollers()
         {
             if(aIControllers.Count == 0)
@@ -55,7 +80,5 @@ namespace AgarIO.Core
                 return aIControllers;
             }
         }
-
-
     }
 }

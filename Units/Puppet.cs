@@ -8,15 +8,11 @@ using AgarIO.Controllers;
 
 namespace AgarIO.Units
 {
-    class Actor : EatableObject
-    {
-        public Controller powelController;
-        
-        public Actor()
+    class Puppet : EatableObject
+    {        
+        public Puppet()
         {
             Random rand = new Random();
-           // powelController = PowelController;
-            shape = new CircleShape();
             shape.Radius = 30;
             shape.Position = new Vector2f(rand.Next(1, 1500), rand.Next(1, 900));
             shape.FillColor = new Color((byte)rand.Next(1, 255), (byte)rand.Next(1, 255), (byte)rand.Next(1, 255));
@@ -42,14 +38,11 @@ namespace AgarIO.Units
         }
         public void Eat<T>(T objectToEat, List<T> listObjects)
         {
-            listObjects.Remove(objectToEat);
-            //IncreaseRadius(objectToEat as EatableObject);
+            listObjects.Remove(objectToEat);           
         }
-        public void ChangeBody(Actor destination)
+        public void ChangeBody(Puppet destination)
         {
-            Controller tempController = powelController;
-            powelController = destination.powelController;
-            destination.powelController = tempController;
+           
         }
     }
 }
